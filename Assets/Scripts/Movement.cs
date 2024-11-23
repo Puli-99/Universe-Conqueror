@@ -19,11 +19,16 @@ public class Movement : MonoBehaviour
     [SerializeField] float controlRollFactor = -20f;
     [SerializeField] ParticleSystem laserR;
     [SerializeField] ParticleSystem laserL;
+    [SerializeField] AudioSource laserSfx;
+    [SerializeField] float fireCooldown = 0.25f;
+    private float timeSinceLastShot = 0f;
+    bool isShooting;
+   
     float xThrow;
     float yThrow;
     void Start()
     {
-        
+       laserSfx = GetComponent <AudioSource>();
     }
 
     // Update is called once per frame
@@ -31,7 +36,7 @@ public class Movement : MonoBehaviour
     {
         Throw();
         Rotation();
-        Firing();
+        FireInput();
     }
 
     void Rotation()
@@ -68,12 +73,73 @@ public class Movement : MonoBehaviour
         transform.localPosition = new Vector3 (clampedXPos, clampedYPos, transform.localPosition.z); 
     }
 
-    void Firing()
+    void FireInput()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetButton("Fire1")) // Detecta si el jugador mantiene presionado el botón de disparo
+        {
+            if (!isShooting)
+            {
+                StartShooting();
+            }
+            else
+            {
+                HandleContinuousShooting();
+            }
+        }
+        else if (Input.GetButtonUp("Fire1")) // Detecta cuando el jugador deja de disparar
+        {
+            StopShooting();
+        }
+
+        if (isShooting)
+        {
+            timeSinceLastShot += Time.deltaTime;
+        }
+    }
+    void Firing()
+    {// Reproduce el sonido de disparo
+        if (laserSfx != null && !laserSfx.isPlaying)
+        {
+            laserSfx.loop = false; // Solo queremos un disparo individual
+            laserSfx.Play();
+        }
+
+        // Activa las partículas
+        if (laserL != null && laserR != null)
         {
             laserL.Play();
             laserR.Play();
+        }
+    }
+    void StartShooting()
+    {
+        isShooting = true;
+        timeSinceLastShot = fireCooldown; // Permite disparar inmediatamente al inicio
+
+    }
+
+    void StopShooting()
+    {
+        isShooting = false;
+
+        // Detén el sistema de partículas (si está activo)
+        if (laserR != null && laserR.isPlaying && laserL != null && laserL.isPlaying)
+        {
+            laserR.Stop();
+            laserL.Stop();
+        }
+        if (laserSfx != null && laserSfx.isPlaying)
+        {
+            laserSfx.Stop();
+        }
+    }
+    void HandleContinuousShooting()
+    {
+        // Comprueba si ha pasado suficiente tiempo desde el último disparo
+        if (timeSinceLastShot >= fireCooldown)
+        {
+            Firing();
+            timeSinceLastShot = 0f; // Reinicia el temporizador 
         }
     }
 }
