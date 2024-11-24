@@ -32,23 +32,25 @@ public class ColliderManager : MonoBehaviour
         GetComponent<MeshRenderer>().enabled = false;
         GetComponent<BoxCollider>().enabled = false; 
         GetComponent<Movement>().enabled = false;
-        Invoke("ReloadLevel", loadDelay);
+        Invoke("LoseScreen", loadDelay);
     }
     void OnParticleCollision(GameObject other)
     {
         if (isDestroyed) {  return; }
-        health--;
-        if (health <= 0)
+        if (other.CompareTag("EnemyLaser "))
         {
-            StartCrashSequence();
-            isDestroyed = true;
+            health--;
+            if (health <= 0)
+            {
+                StartCrashSequence();
+                isDestroyed = true;
+            }
         }
-        Debug.Log($"The health is: {health}");
     }
-    void ReloadLevel()
+    void LoseScreen()
     {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(currentSceneIndex);
+        SceneManager.LoadScene(currentSceneIndex + 1);
     }
 }
     

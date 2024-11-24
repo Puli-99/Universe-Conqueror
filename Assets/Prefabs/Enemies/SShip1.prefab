@@ -69,8 +69,9 @@ MonoBehaviour:
   elaserR: {fileID: 7519421811766773681, guid: 4901cf506276c6d49ae4d205d312fd14, type: 3}
   elaserL: {fileID: 9077061131267639530, guid: 3caa0a2b48e793841a1ea533f8ff0b1b, type: 3}
   elaserSfx: {fileID: 1537787729835972893}
-  weapon: {fileID: 8218614367684315322}
   range: 0
+  weapon: {fileID: 8218614367684315322}
+  lastFireTime: -Infinity
   fireCooldown: 2
 --- !u!65 &6694808698196294297
 BoxCollider:
@@ -191,6 +192,10 @@ PrefabInstance:
     - target: {fileID: 6710295514625030828, guid: 4901cf506276c6d49ae4d205d312fd14, type: 3}
       propertyPath: m_Name
       value: Laser Right
+      objectReference: {fileID: 0}
+    - target: {fileID: 6710295514625030828, guid: 4901cf506276c6d49ae4d205d312fd14, type: 3}
+      propertyPath: m_TagString
+      value: EnemyLaser
       objectReference: {fileID: 0}
     - target: {fileID: 6999354909740447615, guid: 4901cf506276c6d49ae4d205d312fd14, type: 3}
       propertyPath: m_RootOrder
@@ -1369,6 +1374,10 @@ PrefabInstance:
     - target: {fileID: 5241534082810607095, guid: 3caa0a2b48e793841a1ea533f8ff0b1b, type: 3}
       propertyPath: m_Name
       value: Laser Left
+      objectReference: {fileID: 0}
+    - target: {fileID: 5241534082810607095, guid: 3caa0a2b48e793841a1ea533f8ff0b1b, type: 3}
+      propertyPath: m_TagString
+      value: EnemyLaser
       objectReference: {fileID: 0}
     - target: {fileID: 8394953218000386084, guid: 3caa0a2b48e793841a1ea533f8ff0b1b, type: 3}
       propertyPath: m_RootOrder

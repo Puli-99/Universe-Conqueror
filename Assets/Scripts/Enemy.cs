@@ -18,14 +18,14 @@ public class Enemy : MonoBehaviour
     [SerializeField] ParticleSystem elaserR;
     [SerializeField] ParticleSystem elaserL;
     [SerializeField] AudioSource elaserSfx;
-
+    [SerializeField] float range;
     [SerializeField] Transform weapon;  // Punto donde el enemigo apunta/dispara
 
-    [SerializeField] float range = 15f; // Rango de disparo del enemigo
-    [SerializeField] float fireCooldown = 2f; // Tiempo entre disparos
+    bool isFiring = false;
+    [SerializeField] float lastFireTime = -Mathf.Infinity;
+    [SerializeField] float fireCooldown = 1f;
 
     Transform player;  // Referencia al jugador
-    float lastFireTime; // Tiempo desde el último disparo
 
     void Start()    
     {
@@ -33,6 +33,7 @@ public class Enemy : MonoBehaviour
         AddRigidBody();
         scoreBoard = FindObjectOfType<ScoreBoard>();
         elaserSfx = GetComponent<AudioSource>();
+
 
         // Encuentra al jugador automáticamente (usando etiqueta "Player")
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
@@ -44,11 +45,16 @@ public class Enemy : MonoBehaviour
         {
             Debug.LogWarning("Theres no GO with 'Player' Tag.");
         }
+        StopFiring();
     }
 
     private void Update()
     {
-        if (player == null) return; // Si no hay jugador, no hace nada
+        if (Input.GetKey(KeyCode.P))
+        {
+            elaserL.Play();
+            elaserR.Play();
+        }
         AimAtPlayer();
     }
 
@@ -56,44 +62,67 @@ public class Enemy : MonoBehaviour
     {
         if (player == null)
         {
-            Fire(false);
-            Debug.Log("No targets");
             return;
         }
 
         float targetDistance = Vector3.Distance(transform.position, player.position);
         Debug.Log($"Target distance: {targetDistance}, Range: {range}");
 
-        if (targetDistance < range)
+        if (targetDistance <= range)
         {
             weapon.LookAt(player);
-            Fire(true);
-            Debug.Log("I should shoot");
+
+            // Controla el disparo respetando el cooldown
+            if (Time.time > lastFireTime + fireCooldown)
+            {
+                StartFiring();
+                lastFireTime = Time.time;
+            }
         }
         else
         {
-            Fire(false);
-            Debug.Log("Can't reach them!");
+            StopFiring();
         }
+       
     }
-
-   /* void TryToFire()
+    void StartFiring()
     {
-        if (Time.time > lastFireTime + fireCooldown) // Revisa si ya pasó el tiempo de enfriamiento
-       {
-            Fire();
-           // lastFireTime = Time.time; // Actualiza el último tiempo de disparo
-        }
-    }*/
+        if (isFiring) return; // Evita que se inicie el disparo varias veces innecesariamente
 
-        // Activa la animación o el sistema de partículas para simular un disparo
-        void Fire(bool IsActive)
+        isFiring = true;
+
+        // Activa las partículas y el sonido
+        var emissionR = elaserR.emission;
+        var emissionL = elaserL.emission;
+        emissionR.enabled = true;
+        emissionL.enabled = true;
+
+        if (!elaserSfx.isPlaying)
         {
-            var emissionModuleR = elaserR.emission;
-            var emissionModuleL = elaserL.emission;
-            emissionModuleR.enabled = IsActive;
-            emissionModuleL.enabled = IsActive;
+            elaserSfx.Play(); // Reproduce el sonido de disparo
         }
+        StartCoroutine(StopFiringAfterDelay());
+    }
+    IEnumerator StopFiringAfterDelay()
+    {
+        yield return new WaitForSeconds(0.5f); // Ajusta según la duración del disparo
+        StopFiring();
+    }
+    void StopFiring()
+    {
+        if (!isFiring) return; // Si ya está desactivado, no hace nada
+
+        isFiring = false;
+
+        // Detiene las partículas
+        var emissionR = elaserR.emission;
+        var emissionL = elaserL.emission;
+        emissionR.enabled = false;
+        emissionL.enabled = false;
+
+        // Detiene el sonido inmediatamente
+        elaserSfx.Stop();
+    }
     
     void AddRigidBody()
     {
@@ -104,7 +133,7 @@ public class Enemy : MonoBehaviour
     void OnParticleCollision(GameObject other)
     {
         ProcessHit();
-        if (hitPoints < 1)
+        if (hitPoints <= 0)
         {
           KillEnemy();
         }
