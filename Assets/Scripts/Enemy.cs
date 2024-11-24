@@ -17,6 +17,8 @@ public class Enemy : MonoBehaviour
     // [SerializeField] AudioSource deathSFX;
     [SerializeField] ParticleSystem elaserR;
     [SerializeField] ParticleSystem elaserL;
+    [SerializeField] ParticleSystem elaserR2;
+    [SerializeField] ParticleSystem elaserL2;
     [SerializeField] AudioSource elaserSfx;
     [SerializeField] float range;
     [SerializeField] Transform weapon;  // Punto donde el enemigo apunta/dispara
@@ -67,7 +69,6 @@ public class Enemy : MonoBehaviour
         }
 
         float targetDistance = Vector3.Distance(transform.position, player.position);
-        Debug.Log($"Target distance: {targetDistance}, Range: {range}");
 
         if (targetDistance <= range)
         {
@@ -99,6 +100,8 @@ public class Enemy : MonoBehaviour
         {
             elaserL.Play();
             elaserR.Play();
+            elaserL2.Play();
+            elaserR2.Play();
         }
     }
         void StartFiring()

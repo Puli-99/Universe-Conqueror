@@ -10,16 +10,19 @@ public class ColliderManager : MonoBehaviour
     [SerializeField] ParticleSystem explosion;
     [SerializeField] AudioClip explosionSfx;
     AudioSource audioSource;
-    [SerializeField] int health = 10;
+    [SerializeField] int health = 100;
     bool isDestroyed = false;
+    HealthBoard healthBoard;
 
     private void Start()
     {
+        healthBoard = FindObjectOfType<HealthBoard>();
         audioSource = GetComponent<AudioSource>();
     }
     private void OnTriggerEnter(Collider other)
 
     {
+        health = 0;
         StartCrashSequence();
     }
 
@@ -37,9 +40,10 @@ public class ColliderManager : MonoBehaviour
     void OnParticleCollision(GameObject other)
     {
         if (isDestroyed) {  return; }
-        if (other.CompareTag("EnemyLaser "))
+        if (other.CompareTag("EnemyLaser"))
         {
             health--;
+            HealthManager();
             if (health <= 0)
             {
                 StartCrashSequence();
@@ -52,5 +56,9 @@ public class ColliderManager : MonoBehaviour
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(currentSceneIndex + 1);
     }
-}
-    
+
+    void HealthManager()
+    {
+        healthBoard.DecreaseHealth(1);
+    }
+}    

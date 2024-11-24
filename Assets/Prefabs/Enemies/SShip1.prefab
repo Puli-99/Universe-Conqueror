@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1537787729835972893}
   m_Layer: 0
   m_Name: SShip1
-  m_TagString: Untagged
+  m_TagString: EnemyLaser
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -66,13 +66,13 @@ MonoBehaviour:
   hitVFX: {fileID: 6465539968334250005, guid: 5e1f54c73bddd834d8d316df882b0c20, type: 3}
   scorePerHit: 10
   hitPoints: 4
-  elaserR: {fileID: 7519421811766773681, guid: 4901cf506276c6d49ae4d205d312fd14, type: 3}
-  elaserL: {fileID: 9077061131267639530, guid: 3caa0a2b48e793841a1ea533f8ff0b1b, type: 3}
+  elaserR: {fileID: 5363250708412916539}
+  elaserL: {fileID: 516169924857613398}
   elaserSfx: {fileID: 1537787729835972893}
-  range: 0
+  range: 100
   weapon: {fileID: 8218614367684315322}
   lastFireTime: -Infinity
-  fireCooldown: 2
+  fireCooldown: 0.3
 --- !u!65 &6694808698196294297
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -97,7 +97,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 72320fbbd3b2fd3438177e8cf27c05e7, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -242,11 +242,35 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7519421811766773681, guid: 4901cf506276c6d49ae4d205d312fd14, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519421811766773681, guid: 4901cf506276c6d49ae4d205d312fd14, type: 3}
+      propertyPath: lengthInSec
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519421811766773681, guid: 4901cf506276c6d49ae4d205d312fd14, type: 3}
       propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7519421811766773681, guid: 4901cf506276c6d49ae4d205d312fd14, type: 3}
+      propertyPath: CollisionModule.type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519421811766773681, guid: 4901cf506276c6d49ae4d205d312fd14, type: 3}
       propertyPath: CollisionModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519421811766773681, guid: 4901cf506276c6d49ae4d205d312fd14, type: 3}
+      propertyPath: CollisionModule.collisionMessages
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519421811766773681, guid: 4901cf506276c6d49ae4d205d312fd14, type: 3}
+      propertyPath: CollisionModule.collidesWith.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519421811766773681, guid: 4901cf506276c6d49ae4d205d312fd14, type: 3}
+      propertyPath: CollisionModule.m_Planes.Array.size
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -254,6 +278,11 @@ PrefabInstance:
 --- !u!4 &4834322151216092149 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6999354909740447615, guid: 4901cf506276c6d49ae4d205d312fd14, type: 3}
+  m_PrefabInstance: {fileID: 2464667836753028234}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &5363250708412916539 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 7519421811766773681, guid: 4901cf506276c6d49ae4d205d312fd14, type: 3}
   m_PrefabInstance: {fileID: 2464667836753028234}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3855460084357675452
@@ -1424,16 +1453,40 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9077061131267639530, guid: 3caa0a2b48e793841a1ea533f8ff0b1b, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9077061131267639530, guid: 3caa0a2b48e793841a1ea533f8ff0b1b, type: 3}
+      propertyPath: lengthInSec
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9077061131267639530, guid: 3caa0a2b48e793841a1ea533f8ff0b1b, type: 3}
       propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9077061131267639530, guid: 3caa0a2b48e793841a1ea533f8ff0b1b, type: 3}
       propertyPath: CollisionModule.type
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9077061131267639530, guid: 3caa0a2b48e793841a1ea533f8ff0b1b, type: 3}
       propertyPath: CollisionModule.enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9077061131267639530, guid: 3caa0a2b48e793841a1ea533f8ff0b1b, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 9077061131267639530, guid: 3caa0a2b48e793841a1ea533f8ff0b1b, type: 3}
+      propertyPath: CollisionModule.collisionMessages
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9077061131267639530, guid: 3caa0a2b48e793841a1ea533f8ff0b1b, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 7.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9077061131267639530, guid: 3caa0a2b48e793841a1ea533f8ff0b1b, type: 3}
+      propertyPath: CollisionModule.collidesWith.m_Bits
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 9077061131267639530, guid: 3caa0a2b48e793841a1ea533f8ff0b1b, type: 3}
       propertyPath: CollisionModule.m_Planes.Array.size
@@ -1441,6 +1494,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3caa0a2b48e793841a1ea533f8ff0b1b, type: 3}
+--- !u!198 &516169924857613398 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 9077061131267639530, guid: 3caa0a2b48e793841a1ea533f8ff0b1b, type: 3}
+  m_PrefabInstance: {fileID: 8850134905545704636}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1031645059800972440 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8394953218000386084, guid: 3caa0a2b48e793841a1ea533f8ff0b1b, type: 3}
