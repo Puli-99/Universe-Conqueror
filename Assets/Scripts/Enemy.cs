@@ -21,6 +21,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] float range;
     [SerializeField] Transform weapon;  // Punto donde el enemigo apunta/dispara
 
+
     bool isFiring = false;
     [SerializeField] float lastFireTime = -Mathf.Infinity;
     [SerializeField] float fireCooldown = 1f;
@@ -85,7 +86,22 @@ public class Enemy : MonoBehaviour
         }
        
     }
-    void StartFiring()
+    void Firing()
+    {// Reproduce el sonido de disparo
+        if (elaserSfx != null && !elaserSfx.isPlaying)
+        {
+            elaserSfx.loop = false; // Solo queremos un disparo individual
+            elaserSfx.Play();
+        }
+
+        // Activa las partículas
+        if (elaserL != null && elaserR != null)
+        {
+            elaserL.Play();
+            elaserR.Play();
+        }
+    }
+        void StartFiring()
     {
         if (isFiring) return; // Evita que se inicie el disparo varias veces innecesariamente
 
@@ -96,11 +112,8 @@ public class Enemy : MonoBehaviour
         var emissionL = elaserL.emission;
         emissionR.enabled = true;
         emissionL.enabled = true;
+        Firing();
 
-        if (!elaserSfx.isPlaying)
-        {
-            elaserSfx.Play(); // Reproduce el sonido de disparo
-        }
         StartCoroutine(StopFiringAfterDelay());
     }
     IEnumerator StopFiringAfterDelay()
