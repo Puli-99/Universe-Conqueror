@@ -73,6 +73,7 @@ public class Enemy : MonoBehaviour
         if (targetDistance <= range)
         {
             weapon.LookAt(player);
+            Debug.Log("Te tengo que mirar");
 
             // Controla el disparo respetando el cooldown
             if (Time.time > lastFireTime + fireCooldown)

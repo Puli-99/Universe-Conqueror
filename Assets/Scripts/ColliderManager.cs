@@ -13,7 +13,7 @@ public class ColliderManager : MonoBehaviour
     [SerializeField] int health = 100;
     bool isDestroyed = false;
     HealthBoard healthBoard;
-
+    // SOy Puli
     private void Start()
     {
         healthBoard = FindObjectOfType<HealthBoard>();
