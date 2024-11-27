@@ -1,17 +1,19 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    [Header ("Basic settings")]
+    [Header("Basic settings")]
     [Tooltip("Ship Input speed")]
     [SerializeField] float controlSpeed;
     [Tooltip("Ship movement range across the camera")]
     [SerializeField] float xRange;
     [Tooltip("Ship movement range across the camera")]
     [SerializeField] float yRange;
+
     [Header("Rotation settings")]
     [SerializeField] float positionPitchFactor = -2f;
     [SerializeField] float controlPitchFactor = -15f;
@@ -23,12 +25,16 @@ public class Movement : MonoBehaviour
     [SerializeField] float fireCooldown = 0.25f;
     private float timeSinceLastShot = 0f;
     bool isShooting;
-   
+
+    [Header("Crosshair settings")]
+    [SerializeField] GameObject crosshair; // Asumimos que el crosshair es un objeto en la escena
+    [SerializeField] float crosshairDistance = 50f; // Distancia a la que queremos ubicar el crosshair
+
     float xThrow;
     float yThrow;
     void Start()
     {
-       laserSfx = GetComponent <AudioSource>();
+        laserSfx = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -65,12 +71,12 @@ public class Movement : MonoBehaviour
         float newXPos = xOffset + transform.localPosition.x;
         float clampedXPos = Mathf.Clamp(newXPos, -xRange, xRange);
 
-       
+
         float yOffset = yThrow * Time.deltaTime * controlSpeed;
         float newYPos = yOffset + transform.localPosition.y;
         float clampedYPos = Mathf.Clamp(newYPos, -yRange, yRange);
 
-        transform.localPosition = new Vector3 (clampedXPos, clampedYPos, transform.localPosition.z); 
+        transform.localPosition = new Vector3(clampedXPos, clampedYPos, transform.localPosition.z);
     }
 
     void FireInput()
@@ -141,5 +147,5 @@ public class Movement : MonoBehaviour
             Firing();
             timeSinceLastShot = 0f; // Reinicia el temporizador 
         }
-    }
+    }    
 }
