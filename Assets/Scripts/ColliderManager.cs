@@ -13,7 +13,7 @@ public class ColliderManager : MonoBehaviour
     [SerializeField] int health = 100;
     bool isDestroyed = false;
     HealthBoard healthBoard;
-    // SOy Puli
+    PilotExpression pilotExpression;
     private void Start()
     {
         healthBoard = FindObjectOfType<HealthBoard>();
@@ -44,6 +44,7 @@ public class ColliderManager : MonoBehaviour
         {
             health--;
             HealthManager();
+            pilotExpression.ShowDamage();
             if (health <= 0)
             {
                 StartCrashSequence();

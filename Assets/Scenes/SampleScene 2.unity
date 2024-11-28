@@ -275,6 +275,11 @@ ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 9077061131267639530, guid: 3caa0a2b48e793841a1ea533f8ff0b1b, type: 3}
   m_PrefabInstance: {fileID: 441340444}
   m_PrefabAsset: {fileID: 0}
+--- !u!223 &378991269 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 8768666870166056122, guid: 3732794ab69be6e4188c3ca8d36d87d7, type: 3}
+  m_PrefabInstance: {fileID: 8768666869060785178}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &378991270 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8768666870166056123, guid: 3732794ab69be6e4188c3ca8d36d87d7, type: 3}
@@ -703,6 +708,7 @@ GameObject:
   - component: {fileID: 1055361114}
   - component: {fileID: 1055361117}
   - component: {fileID: 1055361116}
+  - component: {fileID: 1055361118}
   m_Layer: 5
   m_Name: Crosshair
   m_TagString: Untagged
@@ -768,6 +774,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1055361113}
   m_CullTransparentMesh: 1
+--- !u!114 &1055361118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055361113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: daf2f318ba876844d834addb9d6dedc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shipTransform: {fileID: 1742638380}
+  crosshair: {fileID: 1055361114}
+  canvas: {fileID: 378991269}
+  distanceMultiplier: 10
+  depthDistance: 50
 --- !u!1 &1094849227 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2191210278915148766, guid: 3732794ab69be6e4188c3ca8d36d87d7, type: 3}
