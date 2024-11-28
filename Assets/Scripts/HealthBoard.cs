@@ -16,6 +16,6 @@ public class HealthBoard : MonoBehaviour
     public void DecreaseHealth(int amountToDecrease)
     {
         health -= amountToDecrease;
-        healthText.text = health.ToString();
+        healthText.text = $"Health: {health.ToString()}";
     }
 }
