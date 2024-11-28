@@ -13,9 +13,10 @@ public class ColliderManager : MonoBehaviour
     [SerializeField] int health = 100;
     bool isDestroyed = false;
     HealthBoard healthBoard;
-    PilotExpression pilotExpression;
+    [SerializeField]PilotExpression pilotExpression;
     private void Start()
     {
+        pilotExpression = FindObjectOfType<PilotExpression>();
         healthBoard = FindObjectOfType<HealthBoard>();
         audioSource = GetComponent<AudioSource>();
     }

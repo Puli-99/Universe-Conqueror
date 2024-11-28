@@ -5,37 +5,46 @@ using UnityEngine.UIElements;
 
 public class PilotExpression : MonoBehaviour
 {
-    [SerializeField] Image pilotImage;         // Referencia al componente Image del piloto
-    [SerializeField] Sprite normalSprite;     // Sprite original del piloto
-    [SerializeField] Sprite damagedSprite;    // Sprite del piloto mostrando daño
-    [SerializeField] float damageDuration = 0.5f; // Duración del sprite de daño en segundos
+    [SerializeField] private UnityEngine.UI.Image pilotImage;  // Referencia al componente Image del piloto
+    [SerializeField] private Sprite normalSprite;   // Sprite original del piloto
+    [SerializeField] private Sprite damagedSprite;  // Sprite de daño
+    [SerializeField] private float damageDuration = 0.5f;  // Duración del sprite de daño
+    [SerializeField] private float damageCooldown = 1f; // Tiempo de espera antes de restaurar el sprite normal después de recibir daño
 
-    private bool isDamaged = false; // Controla si el efecto de daño ya está en ejecución
+    private bool isDamaged = false;  // Para evitar cambios rápidos de sprite
+
+    private void Start()
+    {
+        // Asegurarse de que el piloto comience con el sprite normal
+        pilotImage.sprite = normalSprite;
+    }
 
     // Método para activar el efecto de daño
     public void ShowDamage()
     {
-        Debug.Log("Image should change");
-        if (!isDamaged) // Solo inicia el efecto si no está en curso
+        if (!isDamaged)  // Asegurarse de que no se cambie constantemente
         {
             StartCoroutine(DamageEffect());
         }
     }
 
-    // Corutina que controla el cambio de imágenes
+    // Corutina que cambia el sprite y lo restaura después de un tiempo
     private IEnumerator DamageEffect()
     {
-        isDamaged = true; // Marca que el efecto de daño está en curso
+        isDamaged = true;  // Evitar cambios rápidos de sprite
 
-        // Cambia al sprite de daño
+        // Cambiar al sprite de daño
         pilotImage.sprite = damagedSprite;
 
-        // Espera el tiempo especificado
+        // Esperar el tiempo de daño
         yield return new WaitForSeconds(damageDuration);
 
-        // Vuelve al sprite normal
+        // Volver al sprite normal
         pilotImage.sprite = normalSprite;
 
-        isDamaged = false; // Marca que el efecto de daño ha terminado
+        // Esperar un tiempo sin recibir daño antes de permitir otro cambio
+        yield return new WaitForSeconds(damageCooldown);
+
+        isDamaged = false;  // Se puede volver a cambiar el sprite si recibe otro daño
     }
 }
