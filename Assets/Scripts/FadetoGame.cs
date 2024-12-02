@@ -8,7 +8,6 @@ public class FadetoGame : MonoBehaviour
 {
     [SerializeField] CanvasGroup menuCanvasGroup; // Canvas Group para el menú
     [SerializeField] float fadeDuration = 1f;     // Duración del efecto de fade
-    [SerializeField] float delayBeforeTransition = 1f; // Tiempo de espera antes del fade
     [SerializeField] string sceneToLoad = "SampleScene 2"; // Nombre de la escena a cargar
 
     void Start()

@@ -8,7 +8,6 @@ public class CrosshairFollow : MonoBehaviour
     [SerializeField] Transform shipTransform;  // Transform de la nave
     [SerializeField] RectTransform crosshair;  // Referencia al RectTransform del crosshair en el canvas
     [SerializeField] Canvas canvas;           // Canvas donde está el crosshair
-    [SerializeField] float distanceMultiplier = 10f; // Sensibilidad del movimiento del crosshair
     [SerializeField] float depthDistance = 50f;
 
     void Update()

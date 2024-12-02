@@ -1,10 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.SceneManagement;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
-using static UnityEngine.GraphicsBuffer;
 
 //MARTIN TEST
 
@@ -116,8 +113,12 @@ public class Enemy : MonoBehaviour
         // Activa las partículas y el sonido
         var emissionR = elaserR.emission;
         var emissionL = elaserL.emission;
+        var emissionR2 = elaserR2.emission;
+        var emissionL2 = elaserL2.emission;
         emissionR.enabled = true;
         emissionL.enabled = true;
+        emissionR2.enabled = true;
+        emissionL2.enabled = true;
         Firing();
 
         StartCoroutine(StopFiringAfterDelay());
@@ -136,8 +137,12 @@ public class Enemy : MonoBehaviour
         // Detiene las partículas
         var emissionR = elaserR.emission;
         var emissionL = elaserL.emission;
+        var emissionR2 = elaserR2.emission;
+        var emissionL2 = elaserL2.emission;
         emissionR.enabled = false;
         emissionL.enabled = false;
+        emissionR2.enabled = false;
+        emissionL2.enabled = false;
 
         // Detiene el sonido inmediatamente
         elaserSfx.Stop();

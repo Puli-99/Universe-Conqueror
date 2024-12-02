@@ -22,13 +22,7 @@ public class Movement : MonoBehaviour
     [SerializeField] ParticleSystem laserR;
     [SerializeField] ParticleSystem laserL;
     [SerializeField] AudioSource laserSfx;
-    [SerializeField] float fireCooldown = 0.25f;
-    private float timeSinceLastShot = 0f;
-    bool isShooting;
-
-    [Header("Crosshair settings")]
-    [SerializeField] GameObject crosshair; // Asumimos que el crosshair es un objeto en la escena
-    [SerializeField] float crosshairDistance = 50f; // Distancia a la que queremos ubicar el crosshair
+    bool canShoot = true;
 
     float xThrow;
     float yThrow;
@@ -42,7 +36,7 @@ public class Movement : MonoBehaviour
     {
         Throw();
         Rotation();
-        FireInput();
+        HandleShootingInput();
     }
 
     void Rotation()
@@ -79,34 +73,21 @@ public class Movement : MonoBehaviour
         transform.localPosition = new Vector3(clampedXPos, clampedYPos, transform.localPosition.z);
     }
 
-    void FireInput()
+    void HandleShootingInput()
     {
-        if (Input.GetButton("Fire1")) // Detecta si el jugador mantiene presionado el botón de disparo
+        if (Input.GetButton("Fire1") && canShoot) // Si el jugador presiona disparar y puede hacerlo
         {
-            if (!isShooting)
-            {
-                StartShooting();
-            }
-            else
-            {
-                HandleContinuousShooting();
-            }
-        }
-        else if (Input.GetButtonUp("Fire1")) // Detecta cuando el jugador deja de disparar
-        {
-            StopShooting();
-        }
-
-        if (isShooting)
-        {
-            timeSinceLastShot += Time.deltaTime;
+            StartCoroutine(Fire());
         }
     }
-    void Firing()
-    {// Reproduce el sonido de disparo
-        if (laserSfx != null && !laserSfx.isPlaying)
+
+    IEnumerator Fire()
+    {
+        canShoot = false; // Deshabilita disparar hasta que termine la corutina
+
+        // Reproduce el sonido de disparo
+        if (laserSfx != null)
         {
-            laserSfx.loop = false; // Solo queremos un disparo individual
             laserSfx.Play();
         }
 
@@ -116,36 +97,20 @@ public class Movement : MonoBehaviour
             laserL.Play();
             laserR.Play();
         }
-    }
-    void StartShooting()
-    {
-        isShooting = true;
-        timeSinceLastShot = fireCooldown; // Permite disparar inmediatamente al inicio
 
-    }
-
-    void StopShooting()
-    {
-        isShooting = false;
-
-        // Detén el sistema de partículas (si está activo)
-        if (laserR != null && laserR.isPlaying && laserL != null && laserL.isPlaying)
+        // Espera a que termine el sonido del disparo
+        if (laserSfx != null)
         {
-            laserR.Stop();
+            yield return new WaitForSeconds(laserSfx.clip.length);
+        }
+
+        // Detén las partículas después del sonido
+        if (laserL != null && laserR != null)
+        {
             laserL.Stop();
+            laserR.Stop();
         }
-        if (laserSfx != null && laserSfx.isPlaying)
-        {
-            laserSfx.Stop();
-        }
+
+        canShoot = true; // Vuelve a habilitar disparar
     }
-    void HandleContinuousShooting()
-    {
-        // Comprueba si ha pasado suficiente tiempo desde el último disparo
-        if (timeSinceLastShot >= fireCooldown)
-        {
-            Firing();
-            timeSinceLastShot = 0f; // Reinicia el temporizador 
-        }
-    }    
 }
