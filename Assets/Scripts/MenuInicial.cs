@@ -19,10 +19,14 @@ public class MenuInicial : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 
-    public void Salir()
+    public void Créditos()
     {
-        Debug.Log("Salir...");
-        Application.Quit();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 3);
+    }
+
+    public void Controles()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
     }
 
 }

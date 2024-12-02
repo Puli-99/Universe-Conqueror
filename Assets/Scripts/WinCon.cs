@@ -13,7 +13,7 @@ public class WinCon : MonoBehaviour
     [SerializeField] int targetSceneIndex = 3; // Índice de la escena a cargar
     [SerializeField] float delayBeforeTransition = 115f; // Tiempo antes de iniciar la transición
     [SerializeField] AudioSource musicAudioSource; // Asigna el AudioSource de la música en el inspector
-    float fadeOutDuration = 3f; // Duración del desvanecimiento en segundos
+    float fadeOutDuration = 1.5f; // Duración del desvanecimiento en segundos
     [SerializeField] GameObject finalBossGO;
     [SerializeField] PlayableDirector timelineDirector;
     FinalBoss finalBoss;
