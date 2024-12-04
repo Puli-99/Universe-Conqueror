@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class MenuInicial : MonoBehaviour
 {
+    [SerializeField] string creditsScene = "MenuCreditos"; // Nombre de la escena a cargar
     public void Jugar()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
@@ -21,12 +22,6 @@ public class MenuInicial : MonoBehaviour
 
     public void Créditos()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 3);
+        SceneManager.LoadScene(creditsScene);
     }
-
-    public void Controles()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
-    }
-
 }
